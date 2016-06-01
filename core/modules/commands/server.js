@@ -275,6 +275,15 @@ var Command = function(params,commander,callback) {
 			}
 		}
 	});
+	this.server.addRoute({
+		method: "GET",
+		path: /^\/manifest.json$/,
+		handler: function(request,response,state) {
+			response.writeHead(200, {"Content-Type": "application/json"});
+			var buffer = state.wiki.getTiddlerText("$:/manifest.json","");
+			response.end(buffer,"base64");
+		}
+	});
 };
 
 Command.prototype.execute = function() {
